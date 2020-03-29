@@ -1,9 +1,6 @@
 import ntpath
 import os
-import socket
 import subprocess
-import sys
-import threading
 import zipfile
 
 
@@ -18,38 +15,29 @@ def error(cmd,dc=""):
 
 
 def jar(nm,mp,*dl):
+	def _copy_jar(zf,jfp,wf):
+		with zipfile.ZipFile(jfp,"r") as jf:
+			for nm in jf.namelist():
+				if (nm.upper()!="META-INF/MANIFEST.MF" and len(jf.read(nm))!=0 and nm not in wf):
+					wf+=[nm]
+					print(nm)
+					zf.writestr(nm,jf.read(nm))
+		return wf
 	with zipfile.ZipFile(nm+".jar","w") as zf:
-		zf.write(mp,arcname="META-INF/MANIFEST.MF")
+		wf=[]
 		for d in dl:
-			bp=ntpath.abspath(d)+"\\"
+			bp=(ntpath.abspath(d)+"\\" if len(d.split("|"))==1 else ntpath.abspath(d.split("|")[0])+"\\").replace("\\","/")
+			if (len(d.split("|"))>1):
+				d=d.split("|")[1]
 			for r,_,fl in os.walk(d):
 				for f in fl:
-					zf.write(ntpath.abspath(ntpath.join(r,f)),arcname=ntpath.abspath(ntpath.join(r,f)).replace(bp,""))
-					print(ntpath.abspath(ntpath.join(r,f)).replace(bp,""))
-
-
-
-def send_socket(ip,p,f):
-	def _wr(ip,p,f):
-		ss=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-		ss.bind((ip,p))
-		ss.listen()
-		with open(f,"rb") as rf:
-			dt=rf.read()
-		(cs,a)=ss.accept()
-		print(a)
-		bs=0
-		cs.send(bytes(f"{len(dt)},","utf-8"))
-		while (bs<len(dt)):
-			cs.send(dt[bs:min(bs+4096,len(dt))])
-			bs+=4096
-		while (True):
-			if (len(str(cs.recv(1)[2:-1]))!=0):
-				break
-		ss.close()
-	thr=threading.Thread(target=_wr,args=(ip,p,f),kwargs={})
-	thr.deamon=True
-	thr.start()
+					if (f.endswith(".jar")):
+						wf=_copy_jar(zf,ntpath.abspath(ntpath.join(r,f)),wf)
+					elif (not ntpath.abspath(ntpath.join(r,f)).replace("\\","/").replace(bp,"") in wf):
+						zf.write(ntpath.abspath(ntpath.join(r,f)),arcname=ntpath.abspath(ntpath.join(r,f)).replace("\\","/").replace(bp,""))
+						wf+=[ntpath.abspath(ntpath.join(r,f)).replace("\\","/").replace(bp,"")]
+						print(ntpath.abspath(ntpath.join(r,f)).replace("\\","/").replace(bp,""))
+		zf.write(mp,arcname="META-INF/MANIFEST.MF")
 
 
 
@@ -62,11 +50,10 @@ os.system("mkdir build\\com\\krzem\\socket_3d_game\\data\\&&xcopy /e /i com\\krz
 jar("server","./_tmp_m.tmp","build")
 os.system("cls&&del _tmp_m.tmp&&rm -rf build&&mkdir build")
 error(["javac","-d","build","com/krzem/socket_3d_game/common/*"],"del server.jar&&rm -rf build")
-error(["javac","-cp","./build/;./jar/;","-d","build","com/krzem/socket_3d_game/client/Main.java"],"del server.jar&&rm -rf build")
+error(["javac","-cp","./build/;./com/krzem/socket_3d_game/client/modules/gluegen-rt.jar;./com/krzem/socket_3d_game/client/modules/gluegen-rt-natives-windows-amd64.jar;./com/krzem/socket_3d_game/client/modules/jogl-all.jar;./com/krzem/socket_3d_game/client/modules/jogl-all-natives-windows-amd64.jar;","-d","build","com/krzem/socket_3d_game/client/Main.java"],"del server.jar&&rm -rf build")
 with open("./_tmp_m.tmp","w") as f:
 	f.write("Manifest-Version: 1.0\nCreated-By: Krzem\nMain-Class: com.krzem.socket_3d_game.client.Main\n")
-jar("client","./_tmp_m.tmp","build","jar")
+jar("client","./_tmp_m.tmp","build","com/krzem/socket_3d_game/client/modules")
 os.system("del _tmp_m.tmp&&rm -rf build&&mkdir build&&copy *.jar build&&del *.jar&&cls")
-# send_socket("192.168.178.73",1111,"build/client.jar")
 os.system("cd build&&start cmd /c \"java -Dfile.encoding=ISO-8859-1 -jar server.jar 7999\"&&java -Dfile.encoding=ISO-8859-1 -jar client.jar")
 os.system("cd ../")

@@ -148,17 +148,6 @@ public class Player extends Constants{
 
 
 
-	// private double _ease(double c,double t){
-	// 	if (Math.abs(t-c)<PLAYER_VEL_MIN_EASE_DIFF){
-	// 		return t+0;
-	// 	}
-	// 	else{
-	// 		return c*PLAYER_VEL_EASE_PROC+(1-PLAYER_VEL_EASE_PROC)*t;
-	// 	}
-	// }
-
-
-
 	private void _collision_wr(){
 		int cx=(int)this.x/32-(this.x<0?1:0);
 		int cz=(int)this.z/32-(this.z<0?1:0);

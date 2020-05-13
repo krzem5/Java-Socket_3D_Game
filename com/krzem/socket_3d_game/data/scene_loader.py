@@ -14,7 +14,7 @@ def _color(hc):
 RAND_COLORS=16
 RAND_COLOR_OFFSET={"minecraft:orange_terracotta":[4,3,0],"minecraft:blue_terracotta":[3,5,8],"minecraft:green_terracotta":[5,7,4],"minecraft:red_terracotta":[6,3,2],"minecraft:red_concrete":[6,3,2],"minecraft:yellow_terracotta":[6,5,3],"minecraft:yellow_concrete":[6,5,3],"minecraft:brown_terracotta":[5,5,3],"minecraft:brown_concrete":[5,5,3]}
 BASE_COLOR={"minecraft:orange_terracotta":_color("#df601a"),"minecraft:blue_terracotta":_color("#7f57e5"),"minecraft:green_terracotta":_color("#a6ba1a"),"minecraft:red_terracotta":_color("#f0371a"),"minecraft:red_concrete":_color("#f0371a"),"minecraft:yellow_terracotta":_color("#df891a"),"minecraft:yellow_concrete":_color("#df891a"),"minecraft:brown_terracotta":_color("#855921"),"minecraft:brown_concrete":_color("#855921")}
-STRUCTURE_FOLDER_PATH=r"C:\Users\Krzem\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\mcserver\world\generated\minecraft\structures\\"
+STRUCTURE_FOLDER_PATH=r"C:\Users\aleks\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\mcserver\world\generated\minecraft\structures\\"
 
 
 

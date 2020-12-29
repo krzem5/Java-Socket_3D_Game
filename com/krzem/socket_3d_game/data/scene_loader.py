@@ -85,13 +85,13 @@ def compile(nm):
 			if (v==0):
 				continue
 			s+=f"o {p[0]-ox*32} {p[1]} {p[2]-oz*32} 1 1 1 {go['d'][k][0]*RAND_COLORS+random(0,RAND_COLORS-1)} {v}\n"
-		with open(f"./scene/{nm},{ox},{oz}.vxl","w") as f:
+		with open(f"./scene/{nm},{ox},{oz}.txt","w") as f:
 			f.write(s[:-1])
 		go["thr_c"]-=1
 	fnml=[]
 	go={"d":{},"ld":{},"db":{},"min_s":None,"max_s":None,"thr_c":0}
 	for f in os.listdir("./scene/"):
-		if (f.startswith(nm) and (f.endswith(".vxl") or f.endswith(".dt"))):
+		if (f.startswith(nm) and (f.endswith(".txt") or f.endswith(".dt"))):
 			os.remove(f"./scene/{f}")
 	for fnm in os.listdir(STRUCTURE_FOLDER_PATH):
 		if (fnm.startswith(nm) and fnm.endswith(".nbt")):

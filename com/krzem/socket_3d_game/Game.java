@@ -42,7 +42,7 @@ public class Game extends Constants{
 				if (e==null){
 					break;
 				}
-				if (e.getName().startsWith(MAP_CHUNK_FILE_PATH.replaceAll("^/",""))&&e.getName().replace(MAP_CHUNK_FILE_PATH.replaceAll("^/",""),"").split("\\.")[0].split(",").length==3&&e.getName().endsWith(".vxl")){
+				if (e.getName().startsWith(MAP_CHUNK_FILE_PATH.replaceAll("^/",""))&&e.getName().replace(MAP_CHUNK_FILE_PATH.replaceAll("^/",""),"").split("\\.")[0].split(",").length==3&&e.getName().endsWith(".txt")){
 					String f=e.getName().replace(MAP_CHUNK_FILE_PATH.replaceAll("^/",""),"").split("\\.")[0];
 					if (tfl.get(f.split(",")[0])==null){
 						tfl.put(f.split(",")[0],new ArrayList<String>());

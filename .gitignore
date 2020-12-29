@@ -2,3 +2,5 @@
 
 build
 com/krzem/socket_3d_game/data/*.py
+com/krzem/socket_3d_game/data/*.dt
+com/krzem/socket_3d_game/data/scene/TEMP.txt

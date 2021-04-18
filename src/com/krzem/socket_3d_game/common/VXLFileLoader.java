@@ -36,8 +36,8 @@ public class VXLFileLoader{
 					case 'c':
 						String c_dt=ln.substring(2).replace("#","").replace(" ","");
 						byte[] o_cl_dt=new byte[c_dt.length()/2];
- 						for (int i=0;i<c_dt.length();i+=2){
- 							o_cl_dt[i/2]=(byte)(Integer.parseInt(c_dt.substring(i,i+2),16));
+						for (int i=0;i<c_dt.length();i+=2){
+							o_cl_dt[i/2]=(byte)(Integer.parseInt(c_dt.substring(i,i+2),16));
 						}
 						o_cl+=new String(o_cl_dt);
 						break;

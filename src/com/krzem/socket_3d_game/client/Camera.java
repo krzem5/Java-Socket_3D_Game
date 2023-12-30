@@ -125,6 +125,7 @@ public class Camera extends Constants{
 	}
 
 
+
 	public void draw(GL2 gl){
 		gl.glViewport(0,0,WINDOW_SIZE.width,WINDOW_SIZE.height);
 		gl.glMatrixMode(GL2.GL_PROJECTION);
